@@ -1,0 +1,20 @@
+I first researched how to implement collision avoidance to gain a better understanding of what must be taken into account when resolving/avoiding
+collisions between mobs. I then completed the first two steps of the assignment fairly quickly since those parts only involved querying the
+mobs on screen and detecting collisions. I then began to implement collision avoidance between mobs, being sure to follow the tutorial I found in
+my research phase and have been referencing for the whole assignment. This tutorial introduced me to the mechanism in my code that uses the distance
+between two mobs that are colliding and a threshold (which is just the average of the sizes of the colliding mobs) to calculate how intense the
+adjustment vector would be. The smaller the distance, the more intense the adjustment vector is. This scaling factor is then multiplied by the
+adjustment vector, which starts out as the vector between the two mobs, after the adjustment is normalized, and this product is then applied to
+the mob's position that we are correcting at game speed (mob's speed * deltaTSec). I also added a horizontal force to any mobs that were stuck
+behind other mobs (for example, a swordsman stuck behind a slow moving giant) so that they could move past slower mobs at the speed they should
+be moving at. I also calculated the angle between the two vectors that represent each of the two mob's direction towards their target (or to themselves
+if they had no target or were a building) to figure out if they were moving in approximately the same direction, which I defined as within 75 degrees. This allowed
+me to apply adjustment forces as described in the assignment requirements. On a more general note, I noticed that collision avoidance only works
+if a mob is meant to move (i.e. it has not reached its target), which led to archers being walked over when they should've been pushed away.
+Because of this, I updated the code to go through the collision avoidance procedure every tick instead of in the move() function
+
+If I had more time, I would look into why the mobs do not always push away from the king castle; while collision avoidance works for the most part
+on the princess castles, mobs tend to hide themselves into the sides of the king castle unless another mob is pushing them away, which leads to
+successful collision avoidance between the smaller mob and the king castle. Additionally, while the waypoint system mostly throws away the need for
+collision avoidance with the river, I would definitely attempt to solve that issue as there were some special cases where mobs would walk over the
+river to their next waypoint depending on where they were placed.
